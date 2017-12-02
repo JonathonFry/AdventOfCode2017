@@ -1,4 +1,16 @@
-pub fn part1(vec: &Vec<u32>) -> u32 {
+use util::read;
+
+pub fn solution() {
+    let data = read("day1".to_owned());
+    let vec = data.chars()
+        .map(|x| x.to_digit(10).unwrap())
+        .collect::<Vec<u32>>();
+
+    println!("Day 1 part 1 {}", part1(&vec));
+    println!("Day 1 part 2 {}", part2(&vec));
+}
+
+fn part1(vec: &Vec<u32>) -> u32 {
     let mut last = vec.last().unwrap();
     let mut sum = 0;
     for i in 0..vec.len() {
@@ -11,7 +23,7 @@ pub fn part1(vec: &Vec<u32>) -> u32 {
     return sum;
 }
 
-pub fn part2(vec: &Vec<u32>) -> u32 {
+fn part2(vec: &Vec<u32>) -> u32 {
     let mut sum = 0;
     let len = vec.len();
     let step = len / 2;

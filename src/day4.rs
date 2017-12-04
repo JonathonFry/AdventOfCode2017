@@ -57,7 +57,7 @@ fn part2() -> u32 {
         temp.sort();
         
         'phrase: for i in 1..temp.len() {
-            if valid(temp[i-1].as_str(), temp[i].as_str()]) {
+            if valid(temp[i-1].as_str(), temp[i].as_str()) {
                 duplicates.push(temp);
                 break 'phrase;
             }

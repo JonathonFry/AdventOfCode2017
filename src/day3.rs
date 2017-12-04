@@ -134,8 +134,8 @@ fn get_value(x: i32, y: i32, map: &HashMap<Pair, i32>) -> i32 {
         for j in -1..2 {
             if i == x && j == y {
                 continue;
-            }       
-            sum += map.get(&Pair { x: x + i , y: y + j }).unwrap_or(&0);
+            }
+            sum += map.get(&Pair { x: x + i, y: y + j }).unwrap_or(&0);
         }
     }
 

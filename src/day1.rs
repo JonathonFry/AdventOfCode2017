@@ -14,8 +14,8 @@ fn part1(vec: &Vec<u32>) -> u32 {
     let mut last = vec.last().unwrap();
     let mut sum = 0;
     for i in 0..vec.len() {
-        let current = vec[i];
-        if current == *last {
+        let current = &vec[i];
+        if current == last {
             sum += current;
         }
         last = &vec[i];

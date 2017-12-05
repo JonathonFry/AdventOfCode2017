@@ -6,11 +6,12 @@ pub fn solution() {
         .map(|x| x.parse::<i32>().unwrap())
         .collect::<Vec<i32>>();
 
-    println!("Day 5 part 1 {}", part1(vec));
-//    println!("Day 5 part 2 {}", part2());
+    println!("Day 5 part 1 {}", solve(&vec, &part1));
+    println!("Day 5 part 2 {}", solve(&vec, &part2));
 }
 
-fn part1(vec: Vec<i32>) -> u32 {
+
+fn solve(vec: &Vec<i32>, f: &Fn(i32) -> i32) -> u32 {
     let mut input = vec.clone();
 
     let mut steps = 0;
@@ -22,7 +23,7 @@ fn part1(vec: Vec<i32>) -> u32 {
         }
 
         let temp = input[value];
-        input[value] += 1;
+        input[value] += f(temp);
 
         let new_value = value as i32 + temp;
         value = new_value as usize;
@@ -33,7 +34,14 @@ fn part1(vec: Vec<i32>) -> u32 {
     return steps;
 }
 
-fn part2() -> u32 {
-    let sum = 0;
-    return sum;
+fn part1(value: i32) -> i32 {
+    return 1;
+}
+
+fn part2(value: i32) -> i32 {
+    if value >= 3 {
+        return -1;
+    } else {
+        return 1;
+    }
 }

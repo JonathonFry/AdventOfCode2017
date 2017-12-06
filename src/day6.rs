@@ -1,4 +1,5 @@
 use util::read;
+use std::collections::HashMap;
 
 pub fn solution() {
     let data = read("day6".to_owned());
@@ -13,35 +14,35 @@ pub fn solution() {
 fn solve(vec: &Vec<u32>, cycles: bool) -> u32 {
     let mut sum = 0;
     let mut input = vec.clone();
-    let mut history: Vec<String> = Vec::new();
-    history.push(get_history(&input));
+    let mut history: HashMap<String, u32> = HashMap::new();
+
+    history.insert(get_history(&input), 0);
 
     let len = input.len() as u32;
 
     'searching: loop {
         let (mut block_size, mut index) = get_max(&input);
-        input[index as usize] = 0;
+        input[index] = 0;
         sum += 1;
         while block_size > 0 {
             index += 1;
-            input[(index % len) as usize] += 1;
+            input[(index % len as usize)] += 1;
             block_size -= 1;
         }
         let item: String = get_history(&input);
-        if history.contains(&item) {
+        if history.contains_key(&item) {
             if cycles {
-                let item_index = history.iter().position(|r| r == &item).unwrap();
-                return (history.len() - item_index) as u32;
+                return history.len() as u32 - history[&item];
             }
             break 'searching;
         }
-        history.push(item);
+        history.insert(item, sum);
     }
 
     return sum;
 }
 
-fn get_max(input: &Vec<u32>) -> (u32, u32) {
+fn get_max(input: &Vec<u32>) -> (u32, usize) {
     let mut max = 0;
     let mut index = 0;
     for i in 0..input.len() {
@@ -51,7 +52,7 @@ fn get_max(input: &Vec<u32>) -> (u32, u32) {
             index = i;
         }
     }
-    return (max, index as u32);
+    return (max, index);
 }
 
 fn get_history(input: &Vec<u32>) -> String {

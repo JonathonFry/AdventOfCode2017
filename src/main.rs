@@ -6,11 +6,20 @@ mod day4;
 mod day5;
 mod day6;
 
+extern crate time;
+
+use self::time::PreciseTime;
+
 fn main() {
-    day1::solution();
-    day2::solution();
-    day3::solution();
-    day4::solution();
-    day5::solution();
+    let start = PreciseTime::now();
+
+//    day1::solution();
+//    day2::solution();
+//    day3::solution();
+//    day4::solution();
+//    day5::solution();
     day6::solution();
+
+    let end = PreciseTime::now();
+    println!("{} ms", start.to(end).num_milliseconds());
 }

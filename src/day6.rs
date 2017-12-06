@@ -6,12 +6,11 @@ pub fn solution() {
         .map(|x| x.parse::<u32>().unwrap())
         .collect::<Vec<u32>>();
 
-    println!("Day 6 part 1 {}", part1(&vec));
-    println!("Day 6 part 2 {}", part2(&vec));
+    println!("Day 6 part 1 {}", solve(&vec, false));
+    println!("Day 6 part 2 {}", solve(&vec, true));
 }
 
-
-fn part1(vec: &Vec<u32>) -> u32 {
+fn solve(vec: &Vec<u32>, cycles: bool) -> u32 {
     let mut sum = 0;
     let mut input = vec.clone();
     let mut history: Vec<String> = Vec::new();
@@ -30,6 +29,10 @@ fn part1(vec: &Vec<u32>) -> u32 {
         }
         let item: String = get_history(&input);
         if history.contains(&item) {
+            if cycles {
+                let item_index = history.iter().position(|r| r == &item).unwrap();
+                return (history.len() - item_index) as u32;
+            }
             break 'searching;
         }
         history.push(item);
@@ -37,31 +40,6 @@ fn part1(vec: &Vec<u32>) -> u32 {
 
     return sum;
 }
-
-fn part2(vec: &Vec<u32>) -> u32 {
-    let mut input = vec.clone();
-    let mut history: Vec<String> = Vec::new();
-    history.push(get_history(&input));
-
-    let len = input.len() as u32;
-
-    'searching: loop {
-        let (mut block_size, mut index) = get_max(&input);
-        input[index as usize] = 0;
-        while block_size > 0 {
-            index += 1;
-            input[(index % len) as usize] += 1;
-            block_size -= 1;
-        }
-        let item: String = get_history(&input);
-        if history.contains(&item) {
-            let item_index = history.iter().position(|r| r == &item).unwrap();
-            return  (history.len() - item_index) as u32;
-        }
-        history.push(item);
-    }
-}
-
 
 fn get_max(input: &Vec<u32>) -> (u32, u32) {
     let mut max = 0;

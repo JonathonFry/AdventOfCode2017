@@ -14,8 +14,8 @@ fn part1() -> i64 {
     });
     let mut sum = 0;
     for s in spreadsheet {
-        let mut max = s.iter().max();
-        let mut min = s.iter().min();
+        let max = s.iter().max();
+        let min = s.iter().min();
         sum += max.unwrap() - min.unwrap();
     }
     return sum;

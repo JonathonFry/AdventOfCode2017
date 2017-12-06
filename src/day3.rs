@@ -33,13 +33,13 @@ fn part2() -> i32 {
     let mut x: i32 = 0;
     let mut y: i32 = 0;
     let mut amount = 1;
-    let mut moveX = true;
+    let mut move_x = true;
     let mut positive = true;
 
     let mut i = 1;
-    map.insert(Pair { x: x, y: y }, i);
+    map.insert(Pair { x, y }, i);
     'outer: loop {
-        if moveX {
+        if move_x {
             for _j in 0..amount {
                 if i == data {
                     break 'outer;
@@ -54,7 +54,7 @@ fn part2() -> i32 {
                 if value > data {
                     return value;
                 }
-                map.insert(Pair { x: x, y: y }, value);
+                map.insert(Pair { x, y }, value);
             }
             positive = !positive;
         } else {
@@ -73,11 +73,11 @@ fn part2() -> i32 {
                 if value > data {
                     return value;
                 }
-                map.insert(Pair { x: x, y: y }, value);
+                map.insert(Pair { x, y }, value);
             }
             amount += 1;
         }
-        moveX = !moveX;
+        move_x = !move_x;
         if i == data {
             break 'outer;
         }

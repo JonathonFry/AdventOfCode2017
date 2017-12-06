@@ -34,7 +34,7 @@ fn solve(vec: &Vec<i32>, f: &Fn(i32) -> i32) -> u32 {
     return steps;
 }
 
-fn part1(value: i32) -> i32 {
+fn part1(_value: i32) -> i32 {
     return 1;
 }
 

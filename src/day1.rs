@@ -31,7 +31,7 @@ fn part2(vec: &Vec<u32>) -> u32 {
     for i in 0..len {
         let current = vec[i];
         let next = step + i;
-        let mut lookahead = 0;
+        let lookahead;
         if next >= len {
             lookahead = vec[next - len];
         } else {

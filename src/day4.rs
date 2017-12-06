@@ -31,7 +31,7 @@ fn part1() -> u32 {
         return first == second;
     }
 
-    let mut sum = size - duplicates.len() as u32;
+    let sum = size - duplicates.len() as u32;
     return sum;
 }
 
@@ -67,6 +67,6 @@ fn part2() -> u32 {
         return first == second;
     }
 
-    let mut sum = size - duplicates.len() as u32;
+    let sum = size - duplicates.len() as u32;
     return sum;
 }

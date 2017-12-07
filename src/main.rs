@@ -5,6 +5,7 @@ mod day3;
 mod day4;
 mod day5;
 mod day6;
+mod day7;
 
 extern crate time;
 
@@ -18,7 +19,8 @@ fn main() {
 //    day3::solution();
 //    day4::solution();
 //    day5::solution();
-    day6::solution();
+//    day6::solution();
+    day7::solution();
 
     let end = PreciseTime::now();
     println!("{} ms", start.to(end).num_milliseconds());

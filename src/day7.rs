@@ -51,15 +51,25 @@ pub fn solution() {
             Some(x) => ()
         }
     }
+    let da_node = get_node(&"kiatxq".to_string(), &temp);
+    println!("{}", da_node.value);
+//    1232 - 6 = 1226
 
+//    let total = get_total(da_node, &temp);
 
-    for node_key in parent_node.unwrap().children {
+    for node_key in da_node.children {
         let node = get_node(&node_key, &temp);
         let total = get_total(node, &temp);
         println!("{} total: {}", node_key, total);
     }
 
-//    println!("{:?}", parent_node);
+//    for node_key in parent_node.unwrap().children {
+//        let node = get_node(&node_key, &temp);
+//        let total = get_total(node, &temp);
+//        println!("{} total: {}", node_key, total);
+//    }
+
+//    println!("{:?}", &parent_node);
 }
 
 

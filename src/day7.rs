@@ -7,27 +7,15 @@ struct Node {
     key: String,
     value: u32,
     parent: Option<Box<Node>>,
-    children: Vec<String>
+    children: Vec<String>,
+    child_nodes: Option<Vec<Node>>
 }
-
-struct Node1 {
-    key: String,
-    value: u32,
-    parent: Option<Box<Node1>>,
-    children: Vec<Node1>
-}
-
-struct Tree {
-    nodes: HashMap<String, Tree>
-}
-
 
 pub fn solution() {
     let data = read("day7".to_owned());
 
     let mut root_tree: Vec<Node> = Vec::new();
 
-    let mut tree = Tree { nodes: HashMap::new() };
 
     let vec = data.split("\n")
         .map(|x| {
@@ -42,32 +30,73 @@ pub fn solution() {
             let key = children[0].to_owned();
             let value = children[1].replace("(", "").replace(")", "").parse::<u32>().unwrap();
 
-            root_tree.push(Node { key: key.to_string(), value: value, parent: None, children: some });
+            root_tree.push(Node { key: key.to_string(), value: value, parent: None, children: some, child_nodes: None });
             return key;
         })
         .collect::<Vec<String>>();
 
 
-    let mut root_nodes: Vec<Node1> = Vec::new();
     let mut temp = root_tree.clone();
 
     for node in &mut root_tree {
+//        set_child_nodes(node, &temp);
         set_parent_node(node, &temp);
     }
 
+//    let mut parent_node = root_tree.iter().find(|&x| &x.key == key).unwrap().clone();
+    let mut parent_node: Option<Node> = None;
     for node in root_tree {
         match node.parent {
-            None => println!("{}", node.key),
+            None => parent_node = Some(node),
             Some(x) => ()
         }
     }
+
+
+    for node_key in parent_node.unwrap().children {
+        let node = get_node(&node_key, &temp);
+        let total = get_total(node, &temp);
+        println!("{} total: {}", node_key, total);
+    }
+
+//    println!("{:?}", parent_node);
 }
 
+
+fn get_node(key: &String, nodes: &Vec<Node>) -> Node {
+    return nodes.iter().find(|&x| &x.key == key).unwrap().clone();
+}
+
+fn get_total(node: Node, nodes: &Vec<Node>) -> u32 {
+    let mut sum = 0;
+    sum += &node.value;
+    if node.children.len() > 0 {
+        for child in node.children {
+            let child_node = get_node(&child, nodes);
+            sum += get_total(child_node, nodes);
+        }
+    }
+//    println!("{} total: {}", node.key, sum);
+    return sum;
+}
 
 fn set_parent_node(child_node: &mut Node, nodes: &Vec<Node>) {
     for node in nodes {
         if node.children.contains(&child_node.key) {
             child_node.parent = Some(Box::new(node.clone()));
         }
+    }
+}
+
+fn set_child_nodes(child_node: &mut Node, nodes: &Vec<Node>) {
+    if child_node.children.len() > 0 {
+        let mut new_nodes: Vec<Node> = Vec::new();
+        for key in &child_node.children {
+            let mut node = nodes.iter().find(|&x| &x.key == key).unwrap().clone();
+            set_child_nodes(&mut node, nodes);
+            new_nodes.push(node);
+        }
+
+        child_node.child_nodes = Some(new_nodes);
     }
 }

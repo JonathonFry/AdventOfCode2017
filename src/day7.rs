@@ -51,23 +51,38 @@ pub fn solution() {
             Some(x) => ()
         }
     }
-    let da_node = get_node(&"kiatxq".to_string(), &temp);
-    println!("{}", da_node.value);
+//    let da_node = get_node(&"kiatxq".to_string(), &temp);
+//    println!("{}", da_node.value);
 //    1232 - 6 = 1226
+
+    /*
+    find diff of root nodes
+    find leaf node where all values are equal
+    leaf node value - diff
+    */
 
 //    let total = get_total(da_node, &temp);
 
-    for node_key in da_node.children {
-        let node = get_node(&node_key, &temp);
-        let total = get_total(node, &temp);
-        println!("{} total: {}", node_key, total);
-    }
-
-//    for node_key in parent_node.unwrap().children {
+//    for node_key in da_node.children {
 //        let node = get_node(&node_key, &temp);
 //        let total = get_total(node, &temp);
 //        println!("{} total: {}", node_key, total);
 //    }
+
+    let mut value = 0;
+    let mut diff = 0;
+    for node_key in parent_node.unwrap().children {
+        let node = get_node(&node_key, &temp);
+        let total = get_total(node, &temp);
+        if value == 0 {
+            value = total;
+        }
+        if value != total {
+            // check this node
+            diff = total - value;
+        }
+        println!("{} total: {}", node_key, total);
+    }
 
 //    println!("{:?}", &parent_node);
 }

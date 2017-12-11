@@ -7,9 +7,10 @@ mod day5;
 mod day6;
 mod day7;
 mod day8;
+mod day9;
 
 extern crate time;
-
+extern crate regex;
 use self::time::PreciseTime;
 
 fn main() {
@@ -22,7 +23,8 @@ fn main() {
 //    day5::solution();
 //    day6::solution();
 //    day7::solution();
-    day8::solution();
+//    day8::solution();
+    day9::solution();
 
     let end = PreciseTime::now();
     println!("{} ms", start.to(end).num_milliseconds());

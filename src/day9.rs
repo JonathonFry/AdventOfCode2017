@@ -12,26 +12,25 @@ pub fn solution() {
 }
 
 fn solve(level: u32, input: &str) -> u32 {
-    println!("level: {}, input: {}", level, input);
-    let mut value = level + 1;
+    let mut new_level = level + 1;
+    let mut value = new_level;
 
-    let has_groups = contains_groups(input);
-    println!("input: {} contains groups: {}", input, has_groups);
+    println!("level: {}, input {:?}", new_level, input);
 
     let groups = get_groups(input);
-    // if it doesn't contain any groups and is valid
 
-    if valid(input) {
-        return value;
-    } else if groups.len() > 1 {
-        for group in groups {
-            value += solve(level + 1, group.as_ref());
+    if groups.len() > 0 {
+        for group in &groups {
+            value += solve(new_level, group.as_ref());
         }
     } else {
-        return 0;
+        if valid(input) {
+            return value;
+        } else {
+            return 0;
+        }
     }
-
-    println!("value: {}", value);
+    println!("{:?}", groups);
     return value;
 }
 
@@ -42,22 +41,11 @@ fn strip_cancels(input: &str) -> String {
 }
 
 fn strip_noise(input: &str) -> String {
-    let re = Regex::new("[^<>{}]").unwrap();
+    let re = Regex::new("[^<>{},]").unwrap();
     let s = re.replace_all(input, "");
     return s.to_string();
 }
 
-fn get_groups(input: &str) -> Vec<String> {
-    let re = Regex::new("\\{[^}]*}").unwrap();
-
-    let mut groups: Vec<String> = Vec::new();
-
-    for cap in re.captures_iter(input) {
-        groups.push(cap[0].to_string());
-    }
-
-    return groups;
-}
 
 fn valid(input: &str) -> bool {
     let re = Regex::new("<+[^>]*>|\\{}").unwrap();
@@ -65,25 +53,13 @@ fn valid(input: &str) -> bool {
     return valid;
 }
 
-fn contains_groups(input: &str) -> bool {
-    // Remove first and last character if {}
-    // Copy everything from first bracket to
-    /*
-    {{}}
-    find first closing bracket, match with last opening bracket (substring)
-    */
-    let mut groups: Vec<String> = Vec::new();
-    let buf = String::new();
-    let mut index = 0;
-    for c in input.chars() {
-        if  c.to_string() == "}" {
+fn get_groups(input: &str) -> Vec<String> {
+    let mut data: String = input.chars().skip(1).take(input.len() - 2).collect();
 
-        }
-        if c.to_string() == "}" && index as usize != input.len() {
-            return true;
-        }
-        index += 1;
-    }
+    let mut groups = data.split(",")
+        .filter(|x| x.contains("{") && x.contains("}"))
+        .filter(|x| !x.is_empty())
+        .map(|x| x.to_owned()).collect::<Vec<String>>();
 
-    return false;
+    return groups;
 }

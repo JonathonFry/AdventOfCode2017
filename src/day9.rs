@@ -30,7 +30,7 @@ fn solve(level: u32, input: &str) -> u32 {
             return 0;
         }
     }
-    println!("{:?}", groups);
+
     return value;
 }
 
@@ -55,6 +55,11 @@ fn valid(input: &str) -> bool {
 
 fn get_groups(input: &str) -> Vec<String> {
     let mut data: String = input.chars().skip(1).take(input.len() - 2).collect();
+    if data.starts_with("{{") && data.ends_with("}}") {
+        let mut groups: Vec<String> = Vec::new();
+        groups.push(data);
+        return groups;
+    }
 
     let mut groups = data.split(",")
         .filter(|x| x.contains("{") && x.contains("}"))

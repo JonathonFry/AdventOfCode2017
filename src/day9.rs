@@ -9,7 +9,8 @@ pub fn solution() {
     s = strip_cancels(s.as_ref());
     s = strip_noise(s.as_ref());
 
-    println!("Day 9 Part 1 {}", solve(s.as_ref()))
+    println!("Day 9 Part 1 {}", solve(s.as_ref()));
+    // expect 7053
 }
 
 fn solve(input: &str) -> u32 {
@@ -19,25 +20,24 @@ fn solve(input: &str) -> u32 {
     let mut ignore = false;
 
     for (i, c) in input.chars().into_iter().enumerate() {
-        println!("level: {} value: {}", level, value);
         if c == '<' {
             ignore = true;
         } else if c == '>' {
             ignore = false;
         }
-        if c == '{' {
+        if c == '{' && !ignore {
             level += 1;
             last_open.insert(level, i);
-        } else if c == '}' {
+        } else if c == '}' && !ignore {
             let mut group: String = String::new();
             if i == input.len() - 1 {
                 group = input.to_owned();
-            } else if !ignore {
+            } else {
                 let temp = last_open.get(&level).unwrap().to_owned();
                 group = input.chars().skip(temp).take((i + 1) - temp).collect();
             }
-            println!("{}", group);
-            if valid(&group) && !ignore {
+
+            if valid(&group) {
                 value += level;
             }
             level -= 1;

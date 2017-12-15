@@ -1,9 +1,21 @@
-pub fn solution() {
-    let data = ["0", "1", "2", "3", "4"];
-    let input = 3;
-    let position = 0;
+use std::ops::Range;
 
-    let reversed: Vec<&str> = data.iter().rev().cloned().collect();
+pub fn solution() {
+    let mut data: Vec<u32> = Range { start: 0, end: 5 }.collect();
+
+    let input = [3, 4, 1, 5];
+    let mut position = 0;
+    let length = data.len();
+
+    for i in input.iter() {
+        let current = position % length;
+
+        let temp: Vec<&u32> = data.iter().skip(position % length).take(*i).collect();
+        println!("{:?}", temp);
+        position += i;
+    }
+
+    let reversed: Vec<u32> = data.iter().rev().cloned().collect();
     println!("{:?}", reversed);
 
     /*

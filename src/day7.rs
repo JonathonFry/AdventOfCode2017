@@ -8,7 +8,7 @@ struct Node {
     value: u32,
     parent: Option<Box<Node>>,
     children: Vec<String>,
-    child_nodes: Option<Vec<Node>>
+    child_nodes: Option<Vec<Node>>,
 }
 
 pub fn solution() {
@@ -36,7 +36,7 @@ pub fn solution() {
         .collect::<Vec<String>>();
 
 
-    let mut temp = root_tree.clone();
+    let temp = root_tree.clone();
 
     for node in &mut root_tree {
 //        set_child_nodes(node, &temp);

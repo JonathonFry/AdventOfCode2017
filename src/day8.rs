@@ -4,7 +4,7 @@ use std::collections::HashMap;
 #[derive(Debug)]
 enum Type {
     Increment,
-    Decrement
+    Decrement,
 }
 
 #[derive(Debug)]
@@ -14,7 +14,7 @@ enum Operation {
     GreaterOrEqual,
     LessOrEqual,
     Equal,
-    NotEqual
+    NotEqual,
 }
 
 #[derive(Debug)]
@@ -24,7 +24,7 @@ struct Item {
     value: i32,
     check: String,
     operation: Operation,
-    check_value: i32
+    check_value: i32,
 }
 
 fn parse_type(value: String) -> Type {
@@ -60,7 +60,7 @@ pub fn solution() {
             value: temp[2].to_owned().parse::<i32>().unwrap(),
             check: temp[4].to_owned(),
             operation: parse_operation(temp[5].to_owned()),
-            check_value: temp[6].to_owned().parse::<i32>().unwrap()
+            check_value: temp[6].to_owned().parse::<i32>().unwrap(),
         }
     }).collect::<Vec<Item>>();
 
@@ -76,8 +76,7 @@ pub fn solution() {
             Operation::GreaterOrEqual => current_value >= check_value,
             Operation::LessOrEqual => current_value <= check_value,
             Operation::Equal => current_value == check_value,
-            Operation::NotEqual => current_value != check_value,
-            _ => panic!("OMG")
+            Operation::NotEqual => current_value != check_value
         };
 
 
@@ -87,8 +86,7 @@ pub fn solution() {
 
             let new_value = match item.t {
                 Type::Increment => target_value + value,
-                Type::Decrement => target_value - value,
-                _ => panic!("OMG")
+                Type::Decrement => target_value - value
             };
             if new_value > max {
                 max = new_value;

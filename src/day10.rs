@@ -1,32 +1,32 @@
 use std::ops::Range;
 
 pub fn solution() {
-    let mut data: Vec<u32> = Range { start: 0, end: 5 }.collect();
+    let mut data: Vec<u32> = Range { start: 0, end: 256 }.collect();
 
-    let input = [3, 4, 1, 5];
+    let input = [212, 254, 178, 237, 2, 0, 1, 54, 167, 92, 117, 125, 255, 61, 159, 164];
     let mut position = 0;
+    let mut skip_size = 0;
     let length = data.len();
 
     for i in input.iter() {
-        let current = position % length;
+        let data_clone = &data.clone().to_owned();
 
-        let temp: Vec<&u32> = data.iter().skip(position % length).take(*i).collect();
-        println!("{:?}", temp);
-        position += i;
+        let mut temp: Vec<u32> = Vec::new();
+        for j in 0..i.clone() {
+            let pos = (position + j) % length as i32;
+            temp.push(data_clone[pos as usize]);
+        }
+        temp = temp.iter().rev().cloned().collect();
+
+        for j in 0..i.clone() {
+            let pos = (position + j) % length as i32;
+            data[pos as usize] = temp[j as usize].to_owned();
+        }
+
+        position += i + skip_size;
+        skip_size += 1;
     }
+    let part_one = data[0] * data[1];
 
-    let reversed: Vec<u32> = data.iter().rev().cloned().collect();
-    println!("{:?}", reversed);
-
-    /*
-    initialise list with 0:255 values
-    for each input
-    start at current position
-    reverse the range given in input
-    current position += input + skip size
-    skip size +=1
-
-    Notes
-    Circular array = position % length for access
-    */
+    println!("Day 10 Part 1 {:?}", part_one);
 }

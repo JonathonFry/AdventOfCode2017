@@ -99,8 +99,8 @@ pub fn solution() {
 
     let max_in_map = map.values().into_iter().max();
 
-    println!("Part 1 {:?}", max_in_map.unwrap());
-    println!("Part 2 {:?}", max);
+    println!("Day 8 Part 1 {:?}", max_in_map.unwrap());
+    println!("Day 8 Part 2 {:?}", max);
 }
 
 fn get_value(key: String, map: &mut HashMap<String, i32>) -> i32 {

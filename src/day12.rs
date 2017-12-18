@@ -15,7 +15,18 @@ pub fn solution() {
     let mut visited: HashSet<String> = HashSet::new();
     visited.insert("0".to_owned());
 
-    println!("{:?}", visit(&input, &mut visited, input.get("0").unwrap()));
+    println!("Day 12 Part 1 {:?}", visit(&input, &mut visited, input.get("0").unwrap()));
+
+    let mut parent: HashSet<String> = HashSet::new();
+    for (key, _) in &input {
+        let mut visited: HashSet<String> = HashSet::new();
+        visit(&input, &mut visited, &input.get(key).unwrap());
+        let mut temp = visited.iter().map(|x| x.to_string()).collect::<Vec<String>>();
+        temp.sort();
+        parent.insert(temp.join(""));
+    }
+
+    println!("Day 12 part 2 {}", parent.len())
 }
 
 fn visit(map: &HashMap<String, Vec<String>>, visited: &mut HashSet<String>, children: &Vec<String>) -> u32 {

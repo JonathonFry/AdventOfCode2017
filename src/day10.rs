@@ -3,7 +3,7 @@ use std::ascii::AsciiExt;
 
 
 pub fn solution() {
-    let temp = b"1,2,3";
+    let temp = b"212,254,178,237,2,0,1,54,167,92,117,125,255,61,159,164";
 
     //    let input = [212, 254, 178, 237, 2, 0, 1, 54, 167, 92, 117, 125, 255, 61, 159, 164];
     let mut input: Vec<u32> = temp.iter().map(|x| format!("{:?}", x).parse::<u32>().unwrap()).collect();
@@ -18,12 +18,10 @@ pub fn solution() {
 
     for i in input.iter() {
         for x in 0..64 {
-            let data_clone = &data.clone().to_owned();
-
             let mut temp: Vec<u32> = Vec::new();
             for j in 0..i.clone() {
                 let pos = (position + j) % length as u32;
-                temp.push(data_clone[pos as usize]);
+                temp.push(data[pos as usize]);
             }
             temp = temp.iter().rev().cloned().collect();
 
@@ -33,7 +31,6 @@ pub fn solution() {
             }
         }
 
-        println!("data {:?}", data);
         position += i + skip_size;
         skip_size += 1;
     }

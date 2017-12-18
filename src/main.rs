@@ -10,6 +10,7 @@ mod day8;
 mod day9;
 mod day10;
 mod day11;
+mod day12;
 
 extern crate time;
 extern crate regex;
@@ -29,7 +30,8 @@ fn main() {
 //    day8::solution();
 //    day9::solution();
 //    day10::solution();
-    day11::solution();
+//    day11::solution();
+    day12::solution();
 
     let end = PreciseTime::now();
     println!("{} ms", start.to(end).num_milliseconds());
